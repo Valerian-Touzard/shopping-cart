@@ -1,13 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { Circles } from "react-loader-spinner";
 
+export type Product = {
+  id: string;
+  title: string;
+  price: number;
+  description: string;
+  category: string;
+  image: string;
+  rating: {
+    rate: number;
+    count: number;
+  };
+};
 const Home = () => {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchListOfProducts();
-  },[]);
+  }, []);
 
   const fetchListOfProducts = async () => {
     setLoading(true);
@@ -21,11 +33,16 @@ const Home = () => {
   };
   return (
     <div>
-      {loading ? 
+      {loading ? (
         <div className="min-h-screen w-full flex justify-center items-center">
-          <Circles height={'120'} width={'120'} color="rgb(127,29,29)" visible={true} />
+          <Circles
+            height={"120"}
+            width={"120"}
+            color="rgb(127,29,29)"
+            visible={true}
+          />
         </div>
-      : null}
+      ) : null}
     </div>
   );
 };
