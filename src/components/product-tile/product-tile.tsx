@@ -1,11 +1,20 @@
 import React from "react";
 import { Product } from "../../pages/home/home";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../store/slices/cart-slice";
 
 type Props = {
   product: Product;
 };
 
 const ProductTile = ({ product }: Props) => {
+
+  const dispatch = useDispatch()
+
+  const handleAddToCard = () =>{
+    dispatch(addToCart(product))
+  }
+
   return (
     <div>
       <div className="group flex flex-col items-center border-2 border-red-900 gap-3 p-4 h-[360px] mt-10 ml-5 rounded-xl">
@@ -22,7 +31,7 @@ const ProductTile = ({ product }: Props) => {
           </h1>
         </div>
         <div className="flex items-center justify-center w-full mt-5">
-            <button className="bg-red-950 text-white border-2 rounded-lg font-bold p-4">Add to cart</button>
+            <button onClick={handleAddToCard} className="bg-red-950 text-white border-2 rounded-lg font-bold p-4">Add to cart</button>
         </div>
       </div>
     </div>
