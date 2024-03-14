@@ -1,19 +1,24 @@
 import React from "react";
 import { Product } from "../../pages/home/home";
-import { useDispatch } from "react-redux";
-import { addToCart } from "../../store/slices/cart-slice";
+import { useDispatch, useSelector } from "react-redux";
+import { RootStateStore } from "../../store";
+import { addToCart, removeFromCart } from "../../store/slices/cart-slice";
 
 type Props = {
   product: Product;
 };
 
 const ProductTile = ({ product }: Props) => {
+  const dispatch = useDispatch();
+  const { cart } = useSelector((state: RootStateStore) => state);
 
-  const dispatch = useDispatch()
+  const handleAddToCard = () => {
+    dispatch(addToCart(product));
+  };
 
-  const handleAddToCard = () =>{
-    dispatch(addToCart(product))
-  }
+  const handleRemoveFromCart = () => {
+    dispatch(removeFromCart(product));
+  };
 
   return (
     <div>
@@ -31,7 +36,18 @@ const ProductTile = ({ product }: Props) => {
           </h1>
         </div>
         <div className="flex items-center justify-center w-full mt-5">
-            <button onClick={handleAddToCard} className="bg-red-950 text-white border-2 rounded-lg font-bold p-4">Add to cart</button>
+          <button
+            onClick={
+              cart.some((item: Product) => item.id === product.id)
+                ? handleRemoveFromCart
+                : handleAddToCard
+            }
+            className="bg-red-950 text-white border-2 rounded-lg font-bold p-4"
+          >
+            {cart.some((item: Product) => item.id === product.id)
+              ? "Remove from cart"
+              : "Add to cart"}
+          </button>
         </div>
       </div>
     </div>
