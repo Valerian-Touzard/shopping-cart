@@ -14,8 +14,6 @@ const Cart = () => {
     setTotal(cart.reduce((acc: number, curr: Product) => acc + curr.price, 0));
   }, []);
 
-  console.log(cart, total);
-
   return (
     <div className="flex justify-center">
       {cart && cart.length ? (
